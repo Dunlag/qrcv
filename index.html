@@ -35,6 +35,7 @@
 <body>
     <div id="terminal">
         <p id="text"></p>
+        <span class="blink">█</span>
     </div>
     <div id="qr-container">
         <p>📄 Escanea para ver mi CV:</p>
@@ -45,26 +46,43 @@
         const textElement = document.getElementById("text");
         const qrContainer = document.getElementById("qr-container");
         const qrCode = document.getElementById("qr-code");
+        const cursor = document.querySelector(".blink");
 
         const messages = [
-            "$ cat CVFer25.pdf",
-            "[Cargando archivo...]",
-            "[Generando código QR...]",
+            "$ cat CVFer25.pdf", 
+            "[Cargando archivo...]", 
+            "[Generando código QR...]", 
             "[Ok. Escanea para ver mi CV]"
         ];
 
-        let index = 0;
+        let messageIndex = 0;
+        let charIndex = 0;
+        let currentMessage = "";
+        
         function typeMessage() {
-            if (index < messages.length) {
-                textElement.innerHTML += messages[index] + "\n";
-                index++;
-                setTimeout(typeMessage, 1500);
+            if (messageIndex < messages.length) {
+                currentMessage = messages[messageIndex];
+                charIndex = 0;
+                typeCharacter();
             } else {
                 qrContainer.style.display = "block";
                 qrCode.src = "qr-code.png";
+                cursor.style.display = "none"; // Oculta el cursor cuando termina la animación
             }
         }
-        
+
+        function typeCharacter() {
+            if (charIndex < currentMessage.length) {
+                textElement.innerHTML += currentMessage.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeCharacter, 50); // Velocidad de escritura
+            } else {
+                textElement.innerHTML += "\n";
+                messageIndex++;
+                setTimeout(typeMessage, 1000); // Pausa entre líneas
+            }
+        }
+
         typeMessage();
     </script>
 </body>
