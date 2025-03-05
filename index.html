@@ -38,7 +38,7 @@
     </div>
     <div id="qr-container">
         <p>📄 Escanea para ver mi CV:</p>
-        <img id="qr-code" src="" alt="Código QR">
+        <img id="qr-code" src="" alt="Código QR" width="300" height="300">
     </div>
 
     <script>
@@ -47,7 +47,7 @@
         const qrCode = document.getElementById("qr-code");
 
         const messages = [
-            "$ cat CV_Fernando.pdf",
+            "$ cat CVFer25.pdf",
             "[Cargando archivo...]",
             "[Generando código QR...]",
             "[Listo. Escanea para ver mi CV]"
@@ -61,7 +61,7 @@
                 setTimeout(typeMessage, 1500);
             } else {
                 qrContainer.style.display = "block";
-                qrCode.src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=TU_LINK_DEL_CV";
+                qrCode.src = "qr-code.png";
             }
         }
         
