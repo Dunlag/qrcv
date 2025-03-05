@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - Código QR</title>
+    <style>
+        body {
+            background-color: black;
+            color: #0f0;
+            font-family: monospace;
+            text-align: center;
+            padding: 50px;
+        }
+        #terminal {
+            border: 2px solid #0f0;
+            padding: 20px;
+            display: inline-block;
+            text-align: left;
+            white-space: pre-line;
+        }
+        .blink {
+            animation: blink 1s steps(2, start) infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        #qr-container {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="terminal">
+        <p id="text"></p>
+    </div>
+    <div id="qr-container">
+        <p>📄 Escanea para ver mi CV:</p>
+        <img id="qr-code" src="" alt="Código QR">
+    </div>
+
+    <script>
+        const textElement = document.getElementById("text");
+        const qrContainer = document.getElementById("qr-container");
+        const qrCode = document.getElementById("qr-code");
+
+        const messages = [
+            "$ cat CV_Fernando.pdf",
+            "[Cargando archivo...]",
+            "[Generando código QR...]",
+            "[Listo. Escanea para ver mi CV]"
+        ];
+
+        let index = 0;
+        function typeMessage() {
+            if (index < messages.length) {
+                textElement.innerHTML += messages[index] + "\n";
+                index++;
+                setTimeout(typeMessage, 1500);
+            } else {
+                qrContainer.style.display = "block";
+                qrCode.src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=TU_LINK_DEL_CV";
+            }
+        }
+        
+        typeMessage();
+    </script>
+</body>
+</html>
